@@ -1,6 +1,7 @@
 name: Delete Expired Items
 
 on:
+  workflow_dispatch:
   schedule:
     # - cron: '31 18 * * *'  # 12:01 AM IST daily
       - cron: '31 18 * * *'  # 12:01 AM IST daily
