@@ -1,0 +1,26 @@
+name: Daily Email Sender
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 11 * * *'  # 5:00 PM IST
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install requests
+        run: pip install requests
+
+      - name: 📧 Run send_email.py
+        env:
+          EMAIL_TRIGGER_TOKEN: ${{ secrets.EMAIL_TRIGGER_TOKEN }}
+        run: python daily/send_email.py
