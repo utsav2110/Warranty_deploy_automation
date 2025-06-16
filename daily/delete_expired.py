@@ -6,7 +6,7 @@ conn = psycopg2.connect(
     dbname=os.environ["SUPABASE_DB"],
     user=os.environ["SUPABASE_USER"],
     password=os.environ["SUPABASE_PASS"],
-    port=5432
+    port=6543
 )
 
 cur = conn.cursor()
