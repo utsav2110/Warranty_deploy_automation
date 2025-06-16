@@ -1,10 +1,11 @@
 import os
 import requests
+import urllib.parse
+
 
 token = os.environ["EMAIL_TRIGGER_TOKEN"]
-# trigger_url = f"https://your-app.streamlit.app/?trigger=email&token={token}"
-trigger_url = f"http://localhost:8501/?trigger=email&token={token}"
-
+encoded_token = urllib.parse.quote(token)
+trigger_url = f"https://warranty-tracking-system.streamlit.app/?trigger=email&token={encoded_token}"
 
 r = requests.get(trigger_url)
 if r.status_code == 200:
