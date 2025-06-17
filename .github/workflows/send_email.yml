@@ -17,10 +17,19 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: 📦 Install requests
-        run: pip install requests
+      - name: 📦 Install dependencies
+        run: |
+          pip install requests
+          pip install psycopg2-binary
+          pip install Pillow
+          pip install fpdf
 
       - name: 📧 Run send_email.py
         env:
-          EMAIL_TRIGGER_TOKEN: ${{ secrets.EMAIL_TRIGGER_TOKEN }}
+          SUPABASE_HOST: ${{ secrets.SUPABASE_HOST }}
+          SUPABASE_DB: ${{ secrets.SUPABASE_DB }}
+          SUPABASE_USER: ${{ secrets.SUPABASE_USER }}
+          SUPABASE_PASS: ${{ secrets.SUPABASE_PASS }}
+          SENDER_MAIL: ${{ secrets.SENDER_MAIL }}
+          SENDER_PASS: ${{ secrets.SENDER_PASS }}
         run: python daily/send_email.py
