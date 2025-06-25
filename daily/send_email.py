@@ -32,30 +32,26 @@ def generate_expiring_warranty_pdf(expiring_items):
         if warranty:
             pdf.add_page()
             pdf.set_font('Arial', 'B', 16)
-            pdf.cell(0, 10, f'Item: {warranty[2]}', ln=True)  # item_name
+            pdf.cell(0, 10, f'Item: {warranty[2]}', ln=True)  
             pdf.set_font('Arial', '', 12)
-            pdf.cell(0, 10, f'Category: {warranty[3]}', ln=True)  # category
-            pdf.cell(0, 10, f'Purchase Date: {warranty[4]}', ln=True)  # purchase_date
-            pdf.cell(0, 10, f'Warranty End Date: {warranty[5]}', ln=True)  # warranty_end_date
-            pdf.cell(0, 10, f'Description: {warranty[7]}', ln=True)  # description
+            pdf.cell(0, 10, f'Category: {warranty[3]}', ln=True)  
+            pdf.cell(0, 10, f'Purchase Date: {warranty[4]}', ln=True)  
+            pdf.cell(0, 10, f'Warranty End Date: {warranty[5]}', ln=True)  
+            pdf.cell(0, 10, f'Description: {warranty[7]}', ln=True)  
 
-            if warranty[6]:  # warranty_card_image
+            if warranty[6]:  
                 try:
-                    # Convert bytes to PIL Image
                     image = Image.open(io.BytesIO(warranty[6]))
-                    # Convert to RGB if necessary
+                
                     if image.mode != 'RGB':
                         image = image.convert('RGB')
                         
                     img_path = f"temp_{warranty[0]}.jpg"
-                    # Save as JPEG with proper quality
                     image.save(img_path, 'JPEG', quality=85)
                     
-                    # Add to PDF
                     try:
                         pdf.image(img_path, x=10, y=100, w=190)
                     finally:
-                        # Clean up temp file
                         if os.path.exists(img_path):
                             os.remove(img_path)
                 except Exception as e:
@@ -85,7 +81,6 @@ def check_expiring_warranties(user_id=None):
     if not expiring_items:
         return 
     
-    # Create HTML email content for expiring warranties
     email_body = f"""
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background-color: #ff6b6b; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
@@ -120,10 +115,8 @@ def check_expiring_warranties(user_id=None):
     </div>
     """
     
-    # Generate PDF for expiring warranties
     pdf_bytes = generate_expiring_warranty_pdf([(item[2], item[5]) for item in expiring_items])
 
-    # Send email with attachment
     try:
         msg = MIMEMultipart("alternative")
         msg['Subject'] = 'Warranty Expiration Notice'
