@@ -82,35 +82,36 @@ def check_expiring_warranties(user_id=None):
         return 
     
     email_body = f"""
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background-color: #ff6b6b; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white;">⚠️ Warranty Expiration Alert</h1>
-            <p style="color: white;">The following items have warranties expiring tomorrow</p>
-        </div>
-        <div style="padding: 20px; background-color: white; border-radius: 0 0 10px 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-            <ul style="list-style-type: none; padding: 0;">
+    <div style="font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #eef1f8; padding: 32px 16px;">
+        <div style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(220,38,38,0.15);">
+            <div style="background: linear-gradient(135deg, #dc2626, #f97316); background-color: #dc2626; padding: 36px 24px; text-align: center;">
+                <div style="display: inline-block; width: 56px; height: 56px; line-height: 56px; background-color: rgba(255,255,255,0.15); border-radius: 50%; font-size: 26px; margin-bottom: 14px;">&#9888;&#65039;</div>
+                <h1 style="color: #ffffff; font-size: 20px; margin: 0; font-weight: 600;">Warranty Expiration Alert</h1>
+                <p style="color: rgba(255,255,255,0.85); font-size: 13px; margin: 4px 0 0;">The following items have warranties expiring tomorrow</p>
+            </div>
+            <div style="padding: 28px 24px; color: #1f2937;">
+                <div style="text-align: center; background-color: #fef2f2; border-radius: 12px; padding: 16px; margin-bottom: 22px;">
+                    <div style="font-size: 28px; font-weight: 700; color: #dc2626;">{len(expiring_items)}</div>
+                    <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8b8fa3; font-weight: 600;">Expiring Tomorrow</div>
+                </div>
     """
-    
+
     for item in expiring_items:
         email_body += f"""
-            <li style="margin: 10px 0; padding: 10px; background-color: #fff3f3; border-radius: 5px; border-left: 4px solid #ff6b6b;">
-                <strong style="color: #e74c3c;">{item[2]}</strong><br>
-                Category: {item[3]}<br>
-                Expires: {item[5]}
-            </li>
+                <div style="padding: 14px 16px; background-color: #f9fafb; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #dc2626;">
+                    <div style="font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 6px;">&#128230; {item[2]}</div>
+                    <div style="font-size: 13px; color: #6b7280;">
+                        <span style="display: inline-block; background-color: #fee2e2; color: #b91c1c; padding: 2px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 600; margin-right: 8px;">{item[3]}</span>
+                        Expires: <strong>{item[5]}</strong>
+                    </div>
+                </div>
         """
-    
-    email_body += """
-            </ul>
-            <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
-                <p style="margin: 0; color: #2c3e50;">
-                    Please take necessary action for the items listed above.
-                </p>
-            </div>
-        </div>
 
-        <div style="text-align: center; margin-top: 20px; color: #7f8c8d;">
-            <p>This is an automated message, please do not reply to this email.</p>
+    email_body += """
+            </div>
+            <div style="text-align: center; padding: 4px 24px 28px;">
+                <p style="margin: 2px 0; font-size: 12px; color: #9ca3af;">This is an automated message, please do not reply to this email.</p>
+            </div>
         </div>
     </div>
     """
